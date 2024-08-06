@@ -64,7 +64,7 @@ class VagaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Vaga $vaga)
+    public function update(Request $request, Vaga $vaga)
     {
         $request->validate([
             'titulo'=>'required',
@@ -82,8 +82,12 @@ class VagaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Vaga $vaga)
     {
-        //
+        $vaga->delete();
+
+        return redirect()->route('vagas.index')
+                         ->with('success', 'Vaga Deletada com Sucesso.');
+  
     }
 }
