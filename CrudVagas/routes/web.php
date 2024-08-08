@@ -6,4 +6,4 @@ use App\Http\Controllers\VagaController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('vagas',[VagaController::class]);
+Route::resource('vagas', VagaController::class);

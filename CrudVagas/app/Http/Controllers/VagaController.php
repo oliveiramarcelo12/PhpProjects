@@ -14,7 +14,7 @@ class VagaController extends Controller
     public function index()
     {
         $vagas = Vaga::all();
-        return view('vagas',compact('vagas'));
+        return view('vagas.index',compact('vagas'));
     }
 
     /**
@@ -22,7 +22,7 @@ class VagaController extends Controller
      */
     public function create()
     {
-        return view('vaga.create');
+        return view('vagas.create');
     }
 
     /**
@@ -34,11 +34,11 @@ class VagaController extends Controller
             'titulo'=>'required',
             'descricao'=>'required',
             'setor'=> 'required',
-            'remuneracao'=> 'required|decimal',
+            'remuneracao'=> 'required|numeric',
             'empresa'=> 'required',
 
-        ]);
-        Vaga::create($request->all());
+        ]);                 
+        Vaga::create($request->all());              
         return redirect()->route('vagas.index')
         ->with('success', 'Vaga criada com sucesso.');
 
@@ -56,7 +56,7 @@ class VagaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Vaga $vaga)
     {
         return view('vagas.edit',compact('vaga')); 
     }
@@ -70,11 +70,11 @@ class VagaController extends Controller
             'titulo'=>'required',
             'descricao'=>'required',
             'setor'=> 'required',
-            'remuneracao'=> 'required|decimal',
+            'remuneracao'=> 'required|numeric',
             'empresa'=> 'required',
 
         ]);
-        Vaga::update($request->all());
+        $vaga::update($request->all());
         return redirect()->route('vagas.index')
         ->with('success', 'Vaga criada com sucesso.');
     }
