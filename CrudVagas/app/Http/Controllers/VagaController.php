@@ -74,7 +74,7 @@ class VagaController extends Controller
             'empresa'=> 'required',
 
         ]);
-        $vaga::update($request->all());
+        $vaga->update($request->all());
         return redirect()->route('vagas.index')
         ->with('success', 'Vaga criada com sucesso.');
     }
