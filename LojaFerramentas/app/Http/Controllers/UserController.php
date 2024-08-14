@@ -18,23 +18,22 @@ class UserController extends Controller
  
      // Processar o login do usuário
      public function login(Request $request)
-     {
-         $credentials = $request->validate([
-             'email' => ['required', 'email'],
-             'password' => ['required'],
-         ]);
- 
- 
-         if (Auth::guard('web')->attempt($credentials)) {
-             $request->session()->regenerate();
-             return redirect()->intended('/dashboard');
-         }
- 
- 
-         return back()->withErrors([
-             'email' => 'As credenciais não correspondem aos nossos registros.',
-         ])->onlyInput('email');
-     }
+{
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
+
+    if (Auth::guard('web')->attempt($credentials)) {
+        $request->session()->regenerate();
+        return redirect()->intended('/dashboard');
+    }
+
+    return back()->withErrors([
+        'email' => 'As credenciais não correspondem aos nossos registros.',
+    ])->onlyInput('email');
+}
+
  
  
      // Exibir o formulário de registro
@@ -46,26 +45,27 @@ class UserController extends Controller
  
      // Processar o registro de um novo usuário
      public function registro(Request $request)
-     {
-         $request->validate([
-             'name' => 'required|string|max:255',
-             'email' => 'required|string|email|max:255|unique:users',
-             'password' => 'required|string|min:8|confirmed',
-         ]);
- 
- 
-         $usuario = User::create([
-             'name' => $request->name,
-             'email' => $request->email,
-             'password' => Hash::make($request->password),
-         ]);
- 
- 
-         //Auth::login($usuario);
- 
- 
-         return redirect('/');
-     }
+{
+    $credentials= $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+if ($credentials) {
+    $usuario = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
+    return redirect('/');
+}    
+
+    // Auth::login($usuario);
+
+    return redirect('/');
+}
+
  
  
      // Realizar o logout do usuário
@@ -74,8 +74,8 @@ class UserController extends Controller
          Auth::logout();
  
  
-         $request->session()->invalidate();
          $request->session()->regenerateToken();
+         $request->session()->invalidate();
  
  
          return redirect('/');
