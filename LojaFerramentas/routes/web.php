@@ -29,4 +29,4 @@ Route::get('/dashboard',function(){
 //Rota do logout
 Route::post('/logout', [UserController::class, 'logout']);
 
-Route::resource('produtos', ProdutoController::class);
+Route::resource('produtos', ProdutoController::class)->middleware('auth');
