@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Middleware\ProdutosMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
+
 Route::get('/registro',[UserController::class,'showRegistroForm'])->
 name('usuarios.registro');
 
@@ -29,4 +31,4 @@ Route::get('/dashboard',function(){
 //Rota do logout
 Route::post('/logout', [UserController::class, 'logout']);
 
-Route::resource('produtos', ProdutoController::class)->middleware('auth');
+Route::resource('produtos', ProdutoController::class)->middleware(ProdutosMiddleware::class);

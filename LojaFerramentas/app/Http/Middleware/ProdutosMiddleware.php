@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ProdutosMiddleware
 {
@@ -19,7 +19,6 @@ class ProdutosMiddleware
         if (Auth::check() && Auth::user()->tipo_usuario === 'administrador') {
             return $next($request);
         }
-       return redirect()->route('')->
-       withErrors('acess'-> 'Você não tem permissão para acessar essa área');
+       return redirect()->route('home')->withErrors(['acess'=> 'Você não tem permissão para acessar essa área']);
     }
 }
