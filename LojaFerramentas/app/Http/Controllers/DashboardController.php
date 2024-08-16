@@ -21,7 +21,7 @@ class DashboardController extends Controller
         })->get();
 
 
-        return view('dashboard', compact('produtos'));
+        return view('usuarios.dashboard', compact('produtos'));
     }
 }
 
