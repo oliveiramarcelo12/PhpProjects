@@ -9,29 +9,37 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+
                 @if(Auth::check() && Auth::user()->isAdmin())
-                <li class="nav-item">
-                    <a class="nav-link" href="/produtos">Produtos</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produtos">Produtos</a>
+                    </li>
                 @endif
 
                 @if (Auth::check())
-                <li class="nav-item">
-                    <a class="nav-link" href="/perfil">Perfil</a>
-                </li>
-                <li class="nav-item">
-                    <form action="/logout" method="post" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-link nav-link">Logout</button>
-                    </form>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/perfil">Perfil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Olá, {{ Auth::user()->name }} ({{ Auth::user()->tipo_usuario }})
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li>
+                                <form action="/logout" method="post" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                 @else
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/registro">Registro</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registro">Registrar-se</a>
+                    </li>
                 @endif
             </ul>
         </div>

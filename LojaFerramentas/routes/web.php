@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Middleware\ProdutosMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+//página inicial com carrossel de produtos
+Route::get ('/',[HomeController::class,'index'])->name('home');
 
 Route::get('/registro',[UserController::class,'showRegistroForm'])->
 name('usuarios.registro');
