@@ -10,11 +10,11 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
 
-                @if(Auth::check() && Auth::user()->isAdmin())
+              
                     <li class="nav-item">
                         <a class="nav-link" href="/produtos">Produtos</a>
                     </li>
-                @endif
+              
 
                 @if (Auth::check())
                     <li class="nav-item">
