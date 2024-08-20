@@ -1,0 +1,56 @@
+-------------------------
+|        Curso          |
+-------------------------
+| id: int               |
+| nome: string          |
+| descrição: string     |
+| data_criacao: date    |
+| professor_id: int     |
+-------------------------
+| criarCurso()          |
+| editarCurso()         |
+| excluirCurso()        |
+-------------------------
+
+         1
+         |
+         |
+-------------------------
+|      Professor         |
+-------------------------
+| id: int               |
+| nome: string          |
+| email: string         |
+| senha: string         |
+-------------------------
+| autenticar()          |
+| criarCurso()          |
+| gerenciarCursos()     |
+-------------------------
+
+         *
+         |
+         |
+-------------------------
+|       Aluno            |
+-------------------------
+| id: int               |
+| nome: string          |
+| email: string         |
+| senha: string         |
+-------------------------
+| autenticar()          |
+| inscreverCurso()      |
+| realizarAtividade()   |
+-------------------------
+         |
+         *
+         |
+         |
+-------------------------
+|     Inscrição          |
+-------------------------
+| aluno_id: int         |
+| curso_id: int         |
+| data_inscricao: date  |
+-------------------------
