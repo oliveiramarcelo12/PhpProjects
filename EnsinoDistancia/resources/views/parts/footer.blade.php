@@ -1,3 +1,12 @@
-<div>
-    <!-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger -->
-</div>
+<!-- resources/views/layouts/partials/footer.blade.php -->
+<footer>
+    <div class="container">
+        <p>&copy; {{ date('Y') }} CursosEad. Todos os direitos reservados.</p>
+        <ul>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Contato</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+        </ul>
+    </div>
+</footer>
+``
