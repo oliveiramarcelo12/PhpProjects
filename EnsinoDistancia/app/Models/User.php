@@ -24,7 +24,7 @@ class User extends Authenticatable
     ];
 
     // Método para verificar o tipo de usuário
-    public function isTeacher()
+    public function isProfessor()
     {
         return $this->user_type === 'professor';
     }

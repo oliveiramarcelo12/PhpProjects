@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('nome'); // Nome do curso
             $table->text('descricao'); // Descrição do curso
             $table->date('data_criacao'); // Data de criação do curso
-            $table->unsignedBigInteger('professor_id'); // ID do professor
-            $table->foreign('professor_id')->references('id')->on('usuarios')->onDelete('cascade'); // Chave estrangeira para a tabela de usuários
+            //$table->unsignedBigInteger('professor_id'); // ID do professor
+           // $table->foreign('professor_id')->references('id')->on('usuarios')->onDelete('cascade'); // Chave estrangeira para a tabela de usuários
             $table->timestamps(); // Colunas de timestamps (created_at e updated_at)
         });
     }
