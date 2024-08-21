@@ -3,19 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Professor;
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ProfessorController extends Controller
+class UserController extends Controller
 {
     // Exibir o formulário de login
     public function showLoginForm()
     {
-        return view('professores.login');
+        return view('usuarios.login');
     }
 
-    // Processar o login do professor
+    // Processar o login do usuário
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -23,7 +26,7 @@ class ProfessorController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::guard('professor')->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
@@ -36,33 +39,39 @@ class ProfessorController extends Controller
     // Exibir o formulário de registro
     public function showRegistroForm()
     {
-        return view('professores.registro');
+        return view('usuarios.registro');
     }
 
-    // Processar o registro de um novo professor
+    // Processar o registro de um novo usuário
     public function registro(Request $request)
     {
-        $validated = $request->validate([
+        $credentials = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:professores',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'user_type' => 'required|string|in:student,teacher',
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'user_type' => $request->user_type,
+        ]);
 
-        Professor::create($validated);
+        Auth::login($user);
 
-        return redirect('/login');
+        return redirect('/');
     }
 
-    // Realizar o logout do professor
+    // Realizar o logout do usuário
     public function logout(Request $request)
     {
-        Auth::guard('professor')->logout();
+        Auth::logout();
 
         $request->session()->regenerateToken();
         $request->session()->invalidate();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }
