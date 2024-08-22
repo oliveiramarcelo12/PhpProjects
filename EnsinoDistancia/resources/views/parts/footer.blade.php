@@ -11,9 +11,9 @@
             <div class="col-md-4">
                 <h5>Links Rápidos</h5>
                 <ul class="list-unstyled">
-                    <li><a href="{{ route('home') }}" class="text-white">Home</a></li>
-                    <li><a href="{{ route('login') }}" class="text-white">Login</a></li>
-                    <li><a href="{{ route('registro') }}" class="text-white">Cadastro</a></li>
+                    <li><a href="/" class="text-white">Home</a></li>
+                    <li><a href="/login" class="text-white">Login</a></li>
+                    <li><a href="/registro" class="text-white">Cadastro</a></li>
                 </ul>
             </div>
             <div class="col-md-4">

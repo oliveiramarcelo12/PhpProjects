@@ -29,9 +29,16 @@ class User extends Authenticatable
         return $this->user_type === 'professor';
     }
 
-    // Define o relacionamento com os cursos
-    public function cursos()
-    {
-        return $this->hasMany(Curso::class, 'professor_id');
-    }
+
+
+    public function inscricoes()
+{
+    return $this->hasMany(Inscricao::class);
+}
+
+public function cursos()
+{
+    return $this->belongsToMany(Curso::class, 'inscricoes', 'user_id', 'curso_id');
+}
+
 }

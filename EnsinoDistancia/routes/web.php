@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InscricaoController;
 
 // Página inicial
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -20,16 +21,20 @@ Route::post('/login', [UserController::class, 'login'])->name('usuarios.login');
 // Logout
 Route::post('/logout', [UserController::class, 'logout'])->name('usuarios.logout');
 
-// Dashboard e gerenciamento de cursos, protegido pelo middleware 'checkTeacher'
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'is_professor'])
-    ->name('dashboard');
+Route::get('/dashboard',[DashboardController::class,'index'])->middleware('auth')->name('dashboard');
 
-    // CRUD de cursos
-    Route::get('/cursos', [CursoController::class, 'index'])->name('cursos.index');
-    Route::get('/cursos/create', [CursoController::class, 'create'])->name('cursos.create');
-    Route::post('/cursos', [CursoController::class, 'store'])->name('cursos.store');
-    Route::get('/cursos/{id}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
-    Route::put('/cursos/{id}', [CursoController::class, 'update'])->name('cursos.update');
-    Route::delete('/cursos/{id}', [CursoController::class, 'destroy'])->name('cursos.destroy');
+// Página inicial para cursos
+Route::resource('/cursos', CursoController::class);
 
+// Rota para exibir um curso específico
+Route::get('/cursos/{curso}', [CursoController::class, 'show'])->name('cursos.show');
+
+// Rota para exibir o formulário de edição de um curso
+Route::get('/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
+
+// Rota para atualizar um curso existente
+Route::put('/cursos/{curso}', [CursoController::class, 'update'])->name('cursos.update');
+
+Route::post('/cursos/{curso}/inscrever', [InscricaoController::class, 'inscrever'])->name('cursos.inscrever');
+
+Route::post('/cursos/{curso}/sair', [InscricaoController::class, 'destroy'])->name('cursos.sair');

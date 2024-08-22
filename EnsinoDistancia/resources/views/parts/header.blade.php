@@ -1,6 +1,6 @@
-<!-- resources/views/layouts/app.blade.php (ou outro arquivo de layout) -->
+<!-- resources/views/layouts/app.blade.php -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">EadEnsino</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,27 +13,36 @@
                 </li>
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link" href="{{ route('usuarios.login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('registro') }}">Cadastro</a>
+                        <a class="nav-link" href="{{ route('usuarios.registro') }}">Cadastro</a>
                     </li>
                 @else
-                    @if(auth()->user()->isTeacher())
+                    @if(auth()->user()->isProfessor())
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
                         </li>
                     @endif
+                @endguest
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
+                @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}"
+                        <span class="navbar-text me-3">
+                            Olá, {{ auth()->user()->name }} ({{ auth()->user()->isProfessor() ? 'Professor' : 'Aluno' }})
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('usuarios.logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('usuarios.logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </li>
-                @endguest
+                @endauth
             </ul>
         </div>
     </div>

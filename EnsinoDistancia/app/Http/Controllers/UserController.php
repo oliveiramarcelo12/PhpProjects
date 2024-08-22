@@ -49,21 +49,18 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'user_type' => 'required|string|in:student,teacher',
         ]);
-
-        $user = User::create([
+    
+        $usuario = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_type' => $request->user_type,
+            'user_type' => 'aluno',  // Define como "aluno" por padrão
         ]);
-
-        Auth::login($user);
-
+    
         return redirect('/');
     }
-
+    
     // Realizar o logout do usuário
     public function logout(Request $request)
     {
