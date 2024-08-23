@@ -29,6 +29,13 @@ class User extends Authenticatable
         return $this->user_type === 'professor';
     }
 
+      // Método para verificar o tipo de usuário
+      public function isAluno()
+      {
+          return $this->user_type === 'student';
+      }
+  
+
 
 
     public function inscricoes()
@@ -38,7 +45,8 @@ class User extends Authenticatable
 
 public function cursos()
 {
-    return $this->belongsToMany(Curso::class, 'inscricoes', 'user_id', 'curso_id');
+    return $this->belongsToMany(Curso::class, 'inscricoes', 'user_id', 'curso_id')
+                ->withPivot('id'); // Certifique-se de incluir 'id' se for necessário
 }
 
 }

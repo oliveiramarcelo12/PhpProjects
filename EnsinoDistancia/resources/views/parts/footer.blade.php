@@ -1,4 +1,5 @@
 <!-- resources/views/components/footer.blade.php -->
+ <br><br><br>
 <footer class="bg-dark text-white mt-4 py-3">
     <div class="container">
         <div class="row">

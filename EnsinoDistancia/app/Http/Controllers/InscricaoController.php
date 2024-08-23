@@ -31,26 +31,11 @@ class InscricaoController extends Controller
     // Método para cancelar uma inscrição (opcional)
     public function cancelar($inscricaoId)
     {
-        $inscricao = Inscricao::find($inscricaoId);
-
-        if ($inscricao && $inscricao->user_id == Auth::id()) {
-            $inscricao->delete();
-            return redirect()->route('dashboard')->with('success', 'Inscrição cancelada com sucesso!');
-        }
-
-        return redirect()->route('dashboard')->with('error', 'Erro ao cancelar inscrição.');
+        // Encontrar a inscrição pelo ID e deletar
+        $inscricao = Inscricao::findOrFail($inscricaoId);
+        $inscricao->delete();
+    
+        return redirect()->back()->with('status', 'Inscrição cancelada com sucesso!');
     }
-    public function store(Curso $curso)
-    {
-        // Adiciona o curso à lista de cursos do usuário
-        Auth::user()->cursos()->attach($curso->id);
-        return redirect()->route('dashboard');
-    }
-
-    public function destroy(Curso $curso)
-    {
-        // Remove o curso da lista de cursos do usuário
-        Auth::user()->cursos()->detach($curso->id);
-        return redirect()->route('dashboard');
-    }
+    
 }

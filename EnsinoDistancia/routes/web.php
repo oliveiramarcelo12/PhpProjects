@@ -10,6 +10,7 @@ use App\Http\Controllers\InscricaoController;
 // Página inicial
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+
 // Registro
 Route::get('/registro', [UserController::class, 'showRegistroForm'])->name('usuarios.registro');
 Route::post('/registro', [UserController::class, 'registro'])->name('usuarios.registro');
@@ -21,20 +22,40 @@ Route::post('/login', [UserController::class, 'login'])->name('usuarios.login');
 // Logout
 Route::post('/logout', [UserController::class, 'logout'])->name('usuarios.logout');
 
-Route::get('/dashboard',[DashboardController::class,'index'])->middleware('auth')->name('dashboard');
+// Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-// Página inicial para cursos
-Route::resource('/cursos', CursoController::class);
+// Recursos de Cursos
+Route::resource('/cursos', CursoController::class)->except(['show', 'edit', 'update', 'destroy']);
 
-// Rota para exibir um curso específico
+// Exibir um curso específico
 Route::get('/cursos/{curso}', [CursoController::class, 'show'])->name('cursos.show');
 
-// Rota para exibir o formulário de edição de um curso
+// Formulário de edição de um curso
 Route::get('/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
 
-// Rota para atualizar um curso existente
+// Atualizar um curso existente
 Route::put('/cursos/{curso}', [CursoController::class, 'update'])->name('cursos.update');
 
-Route::post('/cursos/{curso}/inscrever', [InscricaoController::class, 'inscrever'])->name('cursos.inscrever');
+// Excluir um curso
+Route::delete('/cursos/{curso}', [CursoController::class, 'destroy'])->name('cursos.destroy');
 
-Route::post('/cursos/{curso}/sair', [InscricaoController::class, 'destroy'])->name('cursos.sair');
+// Inscrições
+Route::post('/cursos/{curso}/inscrever', [InscricaoController::class, 'inscrever'])->name('inscricoes.inscrever');
+Route::delete('/inscricoes/{inscricao}/cancelar', [InscricaoController::class, 'cancelar'])->name('inscricoes.cancelar');
+
+
+Route::post('/cursos/{curso}/sair', [InscricaoController::class, 'sair'])->name('cursos.sair');
+
+// Em web.php
+Route::get('/cursos/aluno', [CursoController::class, 'aluno'])->name('cursos.aluno');
+
+
+
+// Rota para exibir a lista de alunos inscritos
+Route::get('/cursos/{id}/alunos', [CursoController::class, 'mostrarAlunos'])->name('cursos.mostrar_alunos');
+
+// Rota para atualizar o número de vagas disponíveis
+Route::post('/cursos/{id}/atualizar-vagas', [CursoController::class, 'atualizarVagas'])->name('cursos.atualizar_vagas');
+
+Route::get('/cursos/{curso}', [CursoController::class, 'show'])->name('cursos.show');

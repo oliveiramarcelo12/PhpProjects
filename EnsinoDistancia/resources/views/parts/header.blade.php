@@ -1,5 +1,3 @@
-<!-- resources/views/layouts/app.blade.php -->
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">EadEnsino</a>
@@ -12,36 +10,41 @@
                     <a class="nav-link" href="{{ url('/') }}">Home</a>
                 </li>
                 @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('usuarios.login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('usuarios.registro') }}">Cadastro</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('usuarios.login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('usuarios.registro') }}">Cadastro</a>
+                </li>
                 @else
-                    @if(auth()->user()->isProfessor())
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
-                        </li>
-                    @endif
+                @if(auth()->user()->isProfessor())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
+                </li>
+                @elseif(auth()->user()->isAluno())
+                <li class="nav-item">
+                <a class="nav-link" href="{{ route('cursos.aluno') }}">Cursos Disponíveis</a>
+
+                </li>
+                @endif
                 @endguest
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
                 @auth
-                    <li class="nav-item">
-                        <span class="navbar-text me-3">
-                            Olá, {{ auth()->user()->name }} ({{ auth()->user()->isProfessor() ? 'Professor' : 'Aluno' }})
-                        </span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('usuarios.logout') }}"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
-                        <form id="logout-form" action="{{ route('usuarios.logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
+                <li class="nav-item">
+                    <span class="navbar-text me-3">
+                        Olá, {{ auth()->user()->name }} ({{ auth()->user()->isProfessor() ? 'Professor' : 'Aluno' }})
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('usuarios.logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('usuarios.logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
                 @endauth
             </ul>
         </div>
