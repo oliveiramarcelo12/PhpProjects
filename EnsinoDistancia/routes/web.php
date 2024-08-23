@@ -45,6 +45,7 @@ Route::post('/cursos/{curso}/inscrever', [InscricaoController::class, 'inscrever
 Route::delete('/inscricoes/{inscricao}/cancelar', [InscricaoController::class, 'cancelar'])->name('inscricoes.cancelar');
 
 
+
 Route::post('/cursos/{curso}/sair', [InscricaoController::class, 'sair'])->name('cursos.sair');
 
 // Em web.php
