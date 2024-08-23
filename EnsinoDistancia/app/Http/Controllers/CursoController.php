@@ -164,6 +164,14 @@ class CursoController extends Controller
         return view('cursos.aluno_index', compact('cursos'));
     }
     
-    
+    public function showAllCourses(Request $request)
+    {
+        $search = $request->input('search');
+        $cursos = Curso::when($search, function ($query, $search) {
+            return $query->where('nome', 'like', "%{$search}%");
+        })->with('professor')->get(); // Certifique-se de que 'professor' está carregado
+
+        return view('dashboard', compact('cursos'));
+    }
 
 }

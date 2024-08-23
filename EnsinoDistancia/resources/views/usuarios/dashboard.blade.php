@@ -8,6 +8,8 @@
     <button type="submit">Pesquisar</button>
 </form>
 
+<!-- resources/views/dashboard.blade.php -->
+
 <div class="row mt-4">
     @foreach ($cursos as $curso)
     <div class="col-md-4 mb-4">
@@ -17,6 +19,7 @@
                 <h5 class="card-title">{{ $curso->nome }}</h5>
                 <p class="card-text">{{ $curso->descricao }}</p>
                 <p class="card-text">Data de Início: {{ $curso->data_inicio->format('d/m/Y') }}</p>
+                <p class="card-text">Vagas Restantes: {{ $curso->vagas_restantes }}</p>
 
                 @if(Auth::user()->user_type === 'professor')
                 <!-- Botões para professor -->
@@ -36,11 +39,19 @@
                     <button type="submit" class="btn btn-primary">Inscrever-se</button>
                 </form>
                 @else
-                <form action="{{ route('inscricoes.cancelar', $curso->inscricao_id) }}" method="POST" style="display:inline;">
+                <!-- Se o aluno estiver inscrito, exibe o botão de cancelar -->
+                @php
+                    $inscricao = $curso->inscricoes->where('user_id', Auth::id())->first();
+                @endphp
+
+                @if($inscricao)
+                <form action="{{ route('cursos.cancelar', ['inscricao' => $inscricao->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja cancelar a inscrição?')">Sair do Curso</button>
+                    <button type="submit" class="btn btn-danger">Cancelar Inscrição</button>
                 </form>
+                @endif
+
                 @endif
                 @endif
             </div>
@@ -48,5 +59,6 @@
     </div>
     @endforeach
 </div>
+
 
 @endsection

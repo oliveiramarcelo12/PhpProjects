@@ -21,11 +21,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
                 </li>
-                @elseif(auth()->user()->isAluno())
-                <li class="nav-item">
-                <a class="nav-link" href="{{ route('cursos.aluno') }}">Cursos Disponíveis</a>
-
-                </li>
                 @endif
                 @endguest
             </ul>
@@ -35,6 +30,9 @@
                     <span class="navbar-text me-3">
                         Olá, {{ auth()->user()->name }} ({{ auth()->user()->isProfessor() ? 'Professor' : 'Aluno' }})
                     </span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('usuarios.perfil') }}">Perfil</a> <!-- Link para a página de perfil -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('usuarios.logout') }}"

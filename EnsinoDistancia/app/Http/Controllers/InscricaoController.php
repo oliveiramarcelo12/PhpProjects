@@ -11,23 +11,23 @@ class InscricaoController extends Controller
     // Método para inscrever um aluno em um curso
     public function inscrever($cursoId)
     {
-        $curso = Curso::find($cursoId);
+        $curso = Curso::findOrFail($cursoId);
         $aluno = Auth::user();
-
+    
         // Verifica se o aluno já está inscrito no curso
         if ($curso->alunos()->where('user_id', $aluno->id)->exists()) {
             return redirect()->route('dashboard')->with('error', 'Você já está inscrito neste curso.');
         }
-
+    
         // Cria a inscrição
         Inscricao::create([
-            'curso_id' => $cursoId,
+            'curso_id' => $curso->id,
             'user_id' => $aluno->id,
         ]);
-
+    
         return redirect()->route('dashboard')->with('success', 'Inscrição realizada com sucesso!');
     }
-
+    
     // Método para cancelar uma inscrição (opcional)
     public function cancelar($inscricaoId)
     {
@@ -37,5 +37,6 @@ class InscricaoController extends Controller
     
         return redirect()->back()->with('status', 'Inscrição cancelada com sucesso!');
     }
+    
     
 }

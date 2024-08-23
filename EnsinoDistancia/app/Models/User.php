@@ -49,4 +49,5 @@ public function cursos()
                 ->withPivot('id'); // Certifique-se de incluir 'id' se for necessário
 }
 
+
 }

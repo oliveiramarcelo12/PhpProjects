@@ -3,36 +3,68 @@
 @section('content')
 
 
+<div class="container mt-5">
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
 
-<div class="container">
-    <header>
-        <h1>Bem-vindo ao CursosEad</h1>
-        <p>Plataforma de Ensino à Distância para Cursos Online</p>
-    </header>
 
-    <section class="features">
-        <h2>O que oferecemos</h2>
-        <div class="feature">
-            <h3>Curso 1</h3>
-            <p>Descrição breve do curso 1.</p>
+<div class="container mt-5">
+    <!-- Static Images Section -->
+    <div id="staticImages" class="mb-5">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="\assets\img\curso.png" class="img-fluid" alt="Image 1">
+            </div>
+            <div class="col-md-4">
+                <img src="\assets\img\curso.png" class="img-fluid" alt="Image 2">
+            </div>
+            <div class="col-md-4">
+                <img src="\assets\img\curso.png" class="img-fluid" alt="Image 3">
+            </div>
         </div>
-        <div class="feature">
-            <h3>Curso 2</h3>
-            <p>Descrição breve do curso 2.</p>
-        </div>
-        <div class="feature">
-            <h3>Curso 3</h3>
-            <p>Descrição breve do curso 3.</p>
-        </div>
-    </section>
+    </div>
 
-    <section class="call-to-action">
-        <h2>Comece Agora</h2>
-        <p>Inscreva-se para acessar nossos cursos e começar a aprender hoje mesmo!</p>
-        <!-- <a href="{{ route('cursos.create') }}" class="btn btn-primary">Inscreva-se</a> -->
-    </section>
+    <!-- Static Courses Section -->
+    <div class="mt-5">
+        <h2>Alguns Cursos Disponíveis</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="\assets\img\curso.png" class="card-img-top" alt="Curso 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso 1</h5>
+                        <p class="card-text">Descrição do Curso 1.</p>
+                        <a href="#" class="btn btn-primary">Ver Detalhes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="\assets\img\curso.png" class="card-img-top" alt="Curso 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso 2</h5>
+                        <p class="card-text">Descrição do Curso 2.</p>
+                        <a href="#" class="btn btn-primary">Ver Detalhes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="\assets\img\curso.png" class="card-img-top" alt="Curso 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso 3</h5>
+                        <p class="card-text">Descrição do Curso 3.</p>
+                        <a href="#" class="btn btn-primary">Ver Detalhes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 
 @endsection

@@ -71,4 +71,26 @@ class UserController extends Controller
 
         return redirect('/');
     }
+    public function perfil()
+{
+    $user = Auth::user();
+    return view('usuarios.perfil', compact('user'));
+}
+
+public function atualizarPerfil(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        // Adicione outras validações conforme necessário
+    ]);
+
+ 
+    
+
+    return redirect()->route('usuarios.perfil')->with('success', 'Perfil atualizado com sucesso!');
+}
+
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InscricaoController;
+use App\Http\Middleware\CursoMiddleware;
 
 // Página inicial
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -41,8 +42,9 @@ Route::put('/cursos/{curso}', [CursoController::class, 'update'])->name('cursos.
 Route::delete('/cursos/{curso}', [CursoController::class, 'destroy'])->name('cursos.destroy');
 
 // Inscrições
-Route::post('/cursos/{curso}/inscrever', [InscricaoController::class, 'inscrever'])->name('inscricoes.inscrever');
-Route::delete('/inscricoes/{inscricao}/cancelar', [InscricaoController::class, 'cancelar'])->name('inscricoes.cancelar');
+Route::post('/cursos/{curso}/inscrever', [InscricaoController::class, 'inscrever'])->name('cursos.inscrever');
+
+Route::delete('/inscricoes/{inscricao}/cancelar', [InscricaoController::class, 'cancelar'])->name('cursos.cancelar');
 
 
 
@@ -60,3 +62,11 @@ Route::get('/cursos/{id}/alunos', [CursoController::class, 'mostrarAlunos'])->na
 Route::post('/cursos/{id}/atualizar-vagas', [CursoController::class, 'atualizarVagas'])->name('cursos.atualizar_vagas');
 
 Route::get('/cursos/{curso}', [CursoController::class, 'show'])->name('cursos.show');
+
+Route::get('/perfil', [UserController::class, 'perfil'])->name('usuarios.perfil')->middleware('auth');
+
+Route::post('/perfil/atualizar', [UserController::class, 'atualizarPerfil'])->name('usuarios.atualizarPerfil')->middleware('auth');
+
+Route::middleware([CursoMiddleware::class])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
