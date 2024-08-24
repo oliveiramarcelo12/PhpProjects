@@ -173,5 +173,11 @@ class CursoController extends Controller
 
         return view('dashboard', compact('cursos'));
     }
-
+    public function meusCursos()
+    {
+        $user = Auth::user();
+        $cursos = $user->cursos; // Assumindo que o relacionamento está definido no modelo User
+        return view('cursos.meus', compact('cursos'));
+    }
+    
 }

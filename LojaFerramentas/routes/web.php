@@ -34,3 +34,4 @@ Route::get('produtos/{produto}', [ProdutoController::class, 'show'])->middleware
 
 //rota para adicionar um produto no carrinho
 Route::post('carrinho/add/{produto}', [CarrinhoController::class, 'add'])->middleware('auth')->name('carrinho.add');
+

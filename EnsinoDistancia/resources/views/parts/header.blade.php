@@ -9,6 +9,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('ajuda') }}">Ajuda</a>
+                </li>
+
                 @guest
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('usuarios.login') }}">Login</a>
@@ -16,13 +20,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('usuarios.registro') }}">Cadastro</a>
                 </li>
-                @else
+                @endguest
+
+                @auth
+                @if(auth()->user()->isAluno())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('cursos.meus') }}">Meus Cursos</a>
+                </li>
+                @endif
+
+
                 @if(auth()->user()->isProfessor())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
                 </li>
                 @endif
-                @endguest
+                @endauth
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
                 @auth

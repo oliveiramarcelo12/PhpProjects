@@ -20,7 +20,7 @@ class CursoMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && (Auth::user()->user_type === 'professor' || Auth::user()->user_type === 'aluno')) {
+        if (Auth::check() && (Auth::user()->user_type === 'professor' || Auth::user()->user_type === 'student')) {
             return $next($request);
         }
 

@@ -30,7 +30,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 Route::resource('/cursos', CursoController::class)->except(['show', 'edit', 'update', 'destroy']);
 
 // Exibir um curso específico
-Route::get('/cursos/{curso}', [CursoController::class, 'show'])->name('cursos.show');
+Route::get('/cursos/{curso}', [CursoController::class, 'show'])->middleware('auth')->name('cursos.show');
 
 // Formulário de edição de um curso
 Route::get('/cursos/{curso}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
@@ -67,6 +67,16 @@ Route::get('/perfil', [UserController::class, 'perfil'])->name('usuarios.perfil'
 
 Route::post('/perfil/atualizar', [UserController::class, 'atualizarPerfil'])->name('usuarios.atualizarPerfil')->middleware('auth');
 
-Route::middleware([CursoMiddleware::class])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
+
+Route::get('/ajuda', function () {
+    return view('ajuda');
+})->name('ajuda');
+
+Route::get('/meus-cursos', [CursoController::class, 'meusCursos'])->name('cursos.meus');
+
+Route::group(['middleware' => ['auth', 'curso']], function() {
+    Route::resource('cursos', CursoController::class);
 });

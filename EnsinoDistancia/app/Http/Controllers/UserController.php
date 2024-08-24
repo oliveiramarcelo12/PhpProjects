@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +25,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/dashboard')->with('success', 'Login realizado com sucesso!');
         }
 
         return back()->withErrors([
@@ -50,47 +47,53 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
-    
+
         $usuario = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'user_type' => 'aluno',  // Define como "aluno" por padrão
         ]);
-    
-        return redirect('/');
+
+        Auth::login($usuario);
+
+        return redirect('/dashboard')->with('success', 'Registro realizado com sucesso!');
     }
-    
+
     // Realizar o logout do usuário
     public function logout(Request $request)
     {
         Auth::logout();
-
-        $request->session()->regenerateToken();
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Você saiu com sucesso!');
     }
+
+    // Exibir o perfil do usuário
     public function perfil()
-{
-    $user = Auth::user();
-    return view('usuarios.perfil', compact('user'));
-}
+    {
+        $user = Auth::user();
+        return view('usuarios.perfil', compact('user'));
+    }
 
-public function atualizarPerfil(Request $request)
-{
-    $user = Auth::user();
+    // Atualizar o perfil do usuário
+    public function atualizarPerfil(Request $request)
+    {
+        $user = Auth::user();
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-        // Adicione outras validações conforme necessário
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            // Adicione outras validações conforme necessário
+        ]);
 
- 
-    
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            // Atualize outras informações conforme necessário
+        ]);
 
-    return redirect()->route('usuarios.perfil')->with('success', 'Perfil atualizado com sucesso!');
-}
-
+        return redirect()->route('usuarios.perfil')->with('success', 'Perfil atualizado com sucesso!');
+    }
 }
